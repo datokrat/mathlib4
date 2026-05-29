@@ -724,9 +724,7 @@ variable {S T R : Type*} [CommRing R] (r x y : R) (a b : ℍ[R])
 instance : CoeTC R ℍ[R] := ⟨coe⟩
 
 instance instRing : Ring ℍ[R] := inferInstanceAs <| Ring ℍ[R,-1,0,-1]
-
 instance : Inhabited ℍ[R] := inferInstanceAs <| Inhabited ℍ[R,-1,0,-1]
-
 instance [SMul S R] : SMul S ℍ[R] := inferInstanceAs <| SMul S ℍ[R,-1,0,-1]
 
 instance [SMul S T] [SMul S R] [SMul T R] [IsScalarTower S T R] : IsScalarTower S T ℍ[R] :=
@@ -748,7 +746,10 @@ protected instance algebra [CommSemiring S] [Algebra S R] : Algebra S ℍ[R] :=
   inferInstanceAs <| Algebra S ℍ[R,-1,0,-1]
 
 instance : Star ℍ[R] := inferInstanceAs <| Star ℍ[R,-1,0,-1]
+
 instance : StarRing ℍ[R] := inferInstanceAs <| StarRing ℍ[R,-1,0,-1]
+
+set_option backward.isDefEq.respectTransparency.types false in
 instance : IsStarNormal a := inferInstanceAs <| IsStarNormal (R := ℍ[R,-1,0,-1]) a
 
 @[ext]

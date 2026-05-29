@@ -209,8 +209,12 @@ theorem hahnCoeff_apply {x : seed.baseDomain} {f : Π₀ c, seed.stratum c}
   let f' : ⨁ c, seed.stratum' c :=
     f.mapRange (fun c x ↦ (⟨⟨x.val, hxm x⟩, by simp⟩ : seed.stratum' c)) (by simp)
   have hf : f c = (seed.baseDomain.subtype.submoduleComap (seed.stratum c)) (f' c) := by
+    set_option backward.isDefEq.respectTransparency false in
     apply Subtype.ext
-    simp [f']
+    -- TODO: This should finish with `simp [f']`
+    simp only [DFinsupp.mapRange, DFinsupp.toFun_eq_coe, LinearMap.submoduleComap_apply_coe,
+      Submodule.subtype_apply, f']
+    simp only [DFunLike.coe, instDFunLikeDirectSum._aux_1]
   have hx : x = (decompose seed.stratum').symm f' := by
     change x = f'.coeAddMonoidHom _
     apply Submodule.subtype_injective

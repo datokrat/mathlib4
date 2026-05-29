@@ -150,7 +150,12 @@ theorem degree_eq_of_mem_mem {x : M} {i j : ι} (hxi : x ∈ ℳ i) (hxj : x ∈
 an additive monoid to a direct sum of components. -/
 @[simps!]
 def decomposeAddEquiv : M ≃+ ⨁ i, ℳ i :=
-  AddEquiv.symm { (decompose ℳ).symm with map_add' := map_add (DirectSum.coeAddMonoidHom ℳ) }
+  AddEquiv.symm { (decompose ℳ).symm with
+    -- TODO:
+    -- `simps!` won't apply `AddEquiv.symm_mk` without this `id` because `decompose` and
+    -- `Equiv.symm` are not implicit-reducible, so the type of the proof doesn't match the expected
+    -- type up to implicit reducibility.
+    map_add' := id <| map_add (DirectSum.coeAddMonoidHom ℳ) }
 
 @[simp]
 theorem decompose_zero : decompose ℳ (0 : M) = 0 :=

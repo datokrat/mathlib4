@@ -197,6 +197,7 @@ theorem mapQ_zero (h : p ≤ q.comap (0 : M →ₛₗ[τ₁₂] M₂) := (by sim
   ext
   simp
 
+set_option backward.isDefEq.respectTransparency false in
 /-- Given submodules `p ⊆ M`, `p₂ ⊆ M₂`, `p₃ ⊆ M₃` and maps `f : M → M₂`, `g : M₂ → M₃` inducing
 `mapQ f : M ⧸ p → M₂ ⧸ p₂` and `mapQ g : M₂ ⧸ p₂ → M₃ ⧸ p₃` then
 `mapQ (g ∘ f) = (mapQ g) ∘ (mapQ f)`. -/
@@ -262,6 +263,8 @@ please refer to the dedicated version `Submodule.factorPow`. -/
 abbrev factor (H : p ≤ p') : M ⧸ p →ₗ[R] M ⧸ p' :=
   mapQ _ _ LinearMap.id H
 
+-- TODO: produces `simpNF` linter error without making `Set.Mem` implicit-reducible (as it is now),
+-- but doing so causes other issues (search for `Set.Mem` todos)
 @[simp]
 theorem factor_mk (H : p ≤ p') (x : M) : factor H (mkQ p x) = mkQ p' x :=
   rfl
@@ -271,6 +274,7 @@ theorem factor_comp_mk (H : p ≤ p') : (factor H).comp (mkQ p) = mkQ p' := by
   ext x
   rw [LinearMap.comp_apply, factor_mk]
 
+set_option backward.isDefEq.respectTransparency false in
 @[simp]
 theorem factor_comp (H1 : p ≤ p') (H2 : p' ≤ p'') :
     (factor H2).comp (factor H1) = factor (H1.trans H2) := by

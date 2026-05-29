@@ -171,7 +171,7 @@ variable
 
 /-- The construction `bifunctorComp₁₂` of a trifunctor by composition of bifunctors
 is compatible with localization. -/
-@[implicit_reducible]
+@[instance_reducible]
 noncomputable def Lifting₃.bifunctorComp₁₂ :
     Lifting₃ L₁ L₂ L₃ W₁ W₂ W₃
       ((Functor.postcompose₃.obj L).obj (bifunctorComp₁₂ F₁₂ G))
@@ -186,7 +186,7 @@ noncomputable def Lifting₃.bifunctorComp₁₂ :
 
 /-- The construction `bifunctorComp₂₃` of a trifunctor by composition of bifunctors
 is compatible with localization. -/
-@[implicit_reducible]
+@[instance_reducible]
 noncomputable def Lifting₃.bifunctorComp₂₃ :
     Lifting₃ L₁ L₂ L₃ W₁ W₂ W₃
       ((Functor.postcompose₃.obj L).obj (bifunctorComp₂₃ F G₂₃))
@@ -205,6 +205,7 @@ noncomputable def associator : bifunctorComp₁₂ F₁₂' G' ≅ bifunctorComp
   letI := Lifting₃.bifunctorComp₂₃ L₁ L₂ L₃ L₂₃ L W₁ W₂ W₃ W₂₃ F G₂₃ F' G₂₃'
   lift₃NatIso L₁ L₂ L₃ W₁ W₂ W₃ _ _ _ _ ((Functor.postcompose₃.obj L).mapIso iso)
 
+set_option backward.isDefEq.respectTransparency.types false in
 set_option backward.defeqAttrib.useBackward true in
 lemma associator_hom_app_app_app (X₁ : C₁) (X₂ : C₂) (X₃ : C₃) :
     (((associator L₁ L₂ L₃ L₁₂ L₂₃ L W₁ W₂ W₃ W₁₂ W₂₃ iso F₁₂' G' F' G₂₃').hom.app (L₁.obj X₁)).app

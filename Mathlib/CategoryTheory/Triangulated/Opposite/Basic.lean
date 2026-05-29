@@ -100,6 +100,7 @@ lemma shiftFunctorZero_op_inv_app (X : Cᵒᵖ) :
     shiftFunctorZero_op_hom_app, assoc, ← op_comp_assoc, Iso.hom_inv_id_app, op_id,
     id_comp, Iso.hom_inv_id_app]
 
+set_option backward.isDefEq.respectTransparency.types false in
 set_option backward.defeqAttrib.useBackward true in
 lemma shiftFunctorAdd'_op_hom_app (X : Cᵒᵖ) (a₁ a₂ a₃ : ℤ) (h : a₁ + a₂ = a₃)
     (b₁ b₂ b₃ : ℤ) (h₁ : a₁ + b₁ = 0) (h₂ : a₂ + b₂ = 0) (h₃ : a₃ + b₃ = 0) :
@@ -140,7 +141,7 @@ variable (C) in
 functor is `(shiftFunctor C n).op`. In most cases, it is not necessary to unfold the
 definitions of the unit and counit isomorphisms: the compatibilities they satisfy
 are stated as separate lemmas. -/
-@[simps functor inverse]
+@[simps functor inverse, implicit_reducible]
 def opShiftFunctorEquivalence (n : ℤ) : Cᵒᵖ ≌ Cᵒᵖ where
   functor := shiftFunctor Cᵒᵖ n
   inverse := (shiftFunctor C n).op

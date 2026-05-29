@@ -299,6 +299,7 @@ theorem OrthogonalFamily.projection_directSum_coeAddHom [DecidableEq ι] {V : ι
     simp_rw [map_add]
     exact congr_arg₂ (· + ·) hx hy
 
+set_option backward.isDefEq.respectTransparency false in
 /-- If a family of submodules is orthogonal and they span the whole space, then the orthogonal
 projection provides a means to decompose the space into its submodules.
 
@@ -322,7 +323,9 @@ noncomputable abbrev OrthogonalFamily.decomposition
       exact map_zero _
   right_inv x := by
     dsimp only
-    simp_rw [hV.projection_directSum_coeAddHom, DFinsupp.equivFunOnFintype_symm_coe]
+    -- TODO: Merge `simp_rw` and `rw`
+    simp_rw [hV.projection_directSum_coeAddHom]
+    rw [DFinsupp.equivFunOnFintype_symm_coe]
 
 end OrthogonalFamily
 

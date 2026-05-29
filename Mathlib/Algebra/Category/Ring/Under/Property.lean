@@ -31,6 +31,7 @@ variable {Q : ∀ {R S : Type u} [CommRing R] [CommRing S], (R →+* S) → Prop
 
 open MorphismProperty
 
+set_option backward.isDefEq.respectTransparency.types false in
 lemma RingHom.HasFiniteProducts.isClosedUnderLimitsOfShape (hQi : RespectsIso Q)
     (hQp : HasFiniteProducts Q) (R : CommRingCat.{u}) :
     (toMorphismProperty Q).underObj (X := R).IsClosedUnderFiniteProducts := by
@@ -44,6 +45,7 @@ lemma RingHom.HasFiniteProducts.isClosedUnderLimitsOfShape (hQi : RespectsIso Q)
   rw [underObj_iff, ← Under.w e.inv, (toMorphismProperty Q).cancel_right_of_respectsIso]
   exact hQp _ fun i ↦ hpres _
 
+set_option backward.isDefEq.respectTransparency.types false in
 lemma RingHom.HasEqualizers.isClosedUnderLimitsOfShape (hQi : RespectsIso Q)
     (hQe : HasEqualizers Q) (R : CommRingCat.{u}) :
     (toMorphismProperty Q).underObj (X := R).IsClosedUnderLimitsOfShape WalkingParallelPair := by
@@ -64,7 +66,7 @@ lemma RingHom.HasEqualizers.isClosedUnderLimitsOfShape (hQi : RespectsIso Q)
 
 /-- If `Q` is stable under finite products, the inclusion from the subcategory of `Under R` defined
 by `Q` creates finite products. -/
-@[implicit_reducible]
+@[instance_reducible]
 noncomputable def RingHom.HasFiniteProducts.createsFiniteProductsForget
     (hQi : RespectsIso Q) (hQp : HasFiniteProducts Q) (R : CommRingCat.{u}) :
     CreatesFiniteProducts (MorphismProperty.Under.forget (toMorphismProperty Q) ⊤ R) := by
@@ -82,7 +84,7 @@ lemma RingHom.HasFiniteProducts.hasFiniteProducts (hQi : RespectsIso Q) (hQp : H
 
 /-- If `Q` is stable under equalizers, the inclusion from the subcategory of `Under R` defined
 by `Q` creates equalizers. -/
-@[implicit_reducible]
+@[instance_reducible]
 noncomputable def RingHom.HasEqualizers.createsLimitsWalkingParallelPair (hQi : RespectsIso Q)
     (hQe : HasEqualizers Q) (R : CommRingCat.{u}) :
     CreatesLimitsOfShape WalkingParallelPair
@@ -101,7 +103,7 @@ namespace CommRingCat
 
 /-- If `Q` is stable under finite products and equalizers, the inclusion from the subcategory of
 `Under R` defined by `Q` creates finite limits. -/
-@[implicit_reducible]
+@[instance_reducible]
 noncomputable def Under.createsFiniteLimitsForget (hQi : RingHom.RespectsIso Q)
     (hQp : RingHom.HasFiniteProducts Q) (hQe : RingHom.HasEqualizers Q) (R : CommRingCat.{u}) :
     CreatesFiniteLimits (Under.forget (RingHom.toMorphismProperty Q) ⊤ R) :=

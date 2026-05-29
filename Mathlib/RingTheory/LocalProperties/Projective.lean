@@ -128,6 +128,8 @@ theorem LinearMap.split_surjective_of_localization_maximal
       simp only [coe_comp, coe_restrictScalars, Function.comp_apply,
         LocalizedModule.mkLinearMap_apply, LocalizedModule.map_mk, llcomp_apply]
 
+-- TODO: `respectTransparency.types false` necessary since `Set.Mem` was made implicit-reducible
+set_option backward.isDefEq.respectTransparency.types false in
 theorem Module.projective_of_localization_maximal (H : ∀ (I : Ideal R) (_ : I.IsMaximal),
     Module.Projective (Localization.AtPrime I) (LocalizedModule I.primeCompl M))
     [Module.FinitePresentation R M] : Module.Projective R M := by
@@ -159,6 +161,7 @@ variable
   [inst : ∀ (P : Ideal R) [P.IsMaximal], IsLocalizedModule P.primeCompl (f P)]
 
 set_option backward.defeqAttrib.useBackward true in
+set_option backward.isDefEq.respectTransparency false in
 attribute [local instance] RingHomInvPair.of_ringEquiv RingHomInvPair.of_ringEquiv_symm in
 include f in
 /--

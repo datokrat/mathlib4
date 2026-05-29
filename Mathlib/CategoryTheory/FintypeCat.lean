@@ -47,7 +47,7 @@ instance {X : FintypeCat} : Finite X :=
 
 /-- A `Fintype` instance on objects on `FintypeCat`, that should be turned on as needed.
 Prefer the `Finite` instance if possible. -/
-@[implicit_reducible]
+@[instance_reducible]
 noncomputable def fintype {X : FintypeCat} : Fintype X :=
   Fintype.ofFinite X.obj
 
@@ -215,6 +215,7 @@ instance : incl.Faithful where
   map_injective h := by
     simpa using TypeCat.homEquiv.symm.injective (InducedCategory.homEquiv.symm.injective h)
 
+set_option backward.isDefEq.respectTransparency.types false in
 instance : incl.EssSurj :=
   Functor.EssSurj.mk fun X =>
     letI := X.fintype

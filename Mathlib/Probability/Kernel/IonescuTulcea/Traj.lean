@@ -184,6 +184,8 @@ instance [∀ n, IsProbabilityMeasure (μ n)] (I : Finset ℕ) :
   rw [inducedFamily]
   exact Measure.isProbabilityMeasure_map (measurable_restrict₂ _).aemeasurable
 
+-- TODO: `respectTransparency.types false` necessary since `Set.Mem` was made implicit-reducible
+set_option backward.isDefEq.respectTransparency.types false in
 /-- Given a family of measures `μ : (n : ℕ) → Measure (Π i : Iic n, X i)`, the induced family
 equals `μ` over the intervals `Iic n`. -/
 theorem inducedFamily_Iic (n : ℕ) : inducedFamily μ (Iic n) = μ n := by
@@ -594,6 +596,7 @@ theorem traj_eq_prod (a : ℕ) :
     all_goals fun_prop
   all_goals fun_prop
 
+set_option backward.isDefEq.respectTransparency.types false in
 theorem traj_map_updateFinset {n : ℕ} (x : Π i : Iic n, X i) :
     (traj κ n x).map (updateFinset · (Iic n) x) = traj κ n x := by
   nth_rw 2 [traj_eq_prod]

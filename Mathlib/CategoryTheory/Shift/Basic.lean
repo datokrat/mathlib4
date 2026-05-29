@@ -153,7 +153,7 @@ instance (h : ShiftMkCore C A) : (Discrete.functor h.F).Monoidal :=
         simp [h.add_zero_inv_app] }
 
 /-- Constructs a `HasShift C A` instance from `ShiftMkCore`. -/
-@[implicit_reducible]
+@[instance_reducible]
 def hasShiftMk (h : ShiftMkCore C A) : HasShift C A where
   shift := Discrete.functor h.F
 
@@ -163,6 +163,7 @@ section
 variable [HasShift C A]
 
 /-- The monoidal functor from `A` to `C ⥤ C` given a `HasShift` instance. -/
+@[implicit_reducible]
 def shiftMonoidalFunctor : Discrete A ⥤ C ⥤ C :=
   HasShift.shift
 
@@ -173,6 +174,7 @@ variable {A}
 open Functor.Monoidal
 
 /-- The shift autoequivalence, moving objects and morphisms 'up'. -/
+@[implicit_reducible]
 def shiftFunctor (i : A) : C ⥤ C :=
   (shiftMonoidalFunctor C A).obj ⟨i⟩
 
@@ -238,6 +240,7 @@ lemma shiftFunctorAdd'_zero_add (a : A) :
     eqToHom_map, Category.id_comp]
   rfl
 
+set_option backward.isDefEq.respectTransparency.types false in
 set_option backward.defeqAttrib.useBackward true in
 lemma shiftFunctorAdd'_add_zero (a : A) :
     shiftFunctorAdd' C a 0 a (add_zero a) = (rightUnitor _).symm ≪≫
@@ -739,6 +742,7 @@ def zero : s 0 ≅ 𝟭 C :=
   (hF.whiskeringRight C).preimageIso ((i 0) ≪≫ isoWhiskerLeft F (shiftFunctorZero D A) ≪≫
     rightUnitor _ ≪≫ (leftUnitor _).symm)
 
+set_option backward.isDefEq.respectTransparency.types false in
 set_option backward.defeqAttrib.useBackward true in
 @[simp]
 lemma map_zero_hom_app (X : C) :
@@ -746,6 +750,7 @@ lemma map_zero_hom_app (X : C) :
       (i 0).hom.app X ≫ (shiftFunctorZero D A).hom.app (F.obj X) := by
   simp [zero]
 
+set_option backward.isDefEq.respectTransparency.types false in
 set_option backward.defeqAttrib.useBackward true in
 @[simp]
 lemma map_zero_inv_app (X : C) :
@@ -760,6 +765,7 @@ def add (a b : A) : s (a + b) ≅ s a ⋙ s b :=
       associator _ _ _ ≪≫ (isoWhiskerLeft _ (i b).symm) ≪≫
       (associator _ _ _).symm)
 
+set_option backward.isDefEq.respectTransparency.types false in
 set_option backward.defeqAttrib.useBackward true in
 @[simp]
 lemma map_add_hom_app (a b : A) (X : C) :
@@ -769,6 +775,7 @@ lemma map_add_hom_app (a b : A) (X : C) :
   dsimp [add]
   simp
 
+set_option backward.isDefEq.respectTransparency.types false in
 set_option backward.defeqAttrib.useBackward true in
 @[simp]
 lemma map_add_inv_app (a b : A) (X : C) :
@@ -785,7 +792,7 @@ set_option backward.isDefEq.respectTransparency false in
 open hasShift in
 /-- Given a family of endomorphisms of `C` which are intertwined by a fully faithful `F : C ⥤ D`
 with shift functors on `D`, we can promote that family to shift functors on `C`. -/
-@[implicit_reducible]
+@[instance_reducible]
 def hasShift :
     HasShift C A :=
   hasShiftMk C A

@@ -387,11 +387,13 @@ section WeightedHomogeneousComponent
 
 variable {w : σ → M} (n : M) (φ ψ : MvPolynomial σ R)
 
+set_option dsimp.resynthInstances false in
 theorem coeff_weightedHomogeneousComponent [DecidableEq M] (d : σ →₀ ℕ) :
     coeff d (weightedHomogeneousComponent w n φ) =
       if weight w d = n then coeff d φ else 0 := by
   simp [weightedHomogeneousComponent, MvPolynomial, coeff, Finsupp.filter_apply]
 
+set_option dsimp.resynthInstances false in
 theorem weightedHomogeneousComponent_apply [DecidableEq M] :
     weightedHomogeneousComponent w n φ =
       ∑ d ∈ φ.support with weight w d = n, monomial d (coeff d φ) := by
